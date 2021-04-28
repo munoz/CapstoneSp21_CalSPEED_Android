@@ -7,6 +7,8 @@ import Java.funString
 import Java.speedResults
 import android.os.Bundle
 import android.os.Handler
+import android.transition.AutoTransition
+import android.transition.TransitionManager
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -31,8 +33,8 @@ class Fragment1 : Fragment() {
     var curTest: TextView? = null
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+            inflater: LayoutInflater, container: ViewGroup?,
+            savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_1, container, false)
@@ -44,26 +46,39 @@ class Fragment1 : Fragment() {
         prog_down = progress_bar_down
         prog_up = progress_bar_up
         curTest = text_view_progress
-        progress_bar_ping.visibility = View.INVISIBLE
-        progress_bar_down.visibility = View.INVISIBLE
-        progress_bar_up.visibility = View.INVISIBLE
-        resultsLayout.visibility= View.INVISIBLE
+        progress.visibility = View.GONE
+        resultsLayout.visibility = View.GONE
         mSpeedResults =
-            this.context?.let {
-                Room.databaseBuilder(it, AppDatabase::class.java, AppDatabase.dbName)
-                    .allowMainThreadQueries()
-                    .build()
-                    .getspeedResultsdao()
-            }
+                this.context?.let {
+                    Room.databaseBuilder(it, AppDatabase::class.java, AppDatabase.dbName)
+                            .allowMainThreadQueries()
+                            .build()
+                            .getspeedResultsdao()
+                }
         var up: Button? = button_incr
         up!!.setOnClickListener { updateProgressBar() }
+        var rst: Button? = restart
+        rst!!.setOnClickListener { updateProgressBar() }
     }
 
     private fun updateProgressBar() {
-        button_incr.visibility = View.INVISIBLE
-        progress_bar_ping.visibility = View.VISIBLE
-        progress_bar_down.visibility = View.VISIBLE
-        progress_bar_up.visibility = View.VISIBLE
+        val handler = Handler()
+        if(resultsLayout.visibility == View.VISIBLE){
+            resultsLayout.visibility = View.GONE
+        }
+        if (restart.visibility == View.VISIBLE){
+            restart.visibility =View.INVISIBLE
+        }
+        if(button_incr.visibility == View.VISIBLE){
+            button_incr.visibility = View.INVISIBLE
+        }
+        if(animationView1.visibility == View.INVISIBLE){
+            animationView1.visibility = View.VISIBLE
+        }
+        cpuc.visibility = View.INVISIBLE
+        textView.visibility = View.INVISIBLE
+        test.visibility = View.VISIBLE
+        progress.visibility = View.VISIBLE
         prog_up!!.progress = 0
         prog_down!!.progress = 0
         prog_ping!!.progress = 0
@@ -79,13 +94,12 @@ class Fragment1 : Fragment() {
         val timetaken: Queue<Int> = LinkedList()
         val amount = size / packetSize
         val nRand = Random()
-
         val maxd = nRand.nextInt(100) + 5
         val startSpeed = nRand.nextInt(maxd / 2)
-        val handler = Handler()
+
         val t = Thread(Runnable {
             ///////////////////////////////////////DOWNLOAD//////////////////////////////////
-            handler.post { curTest!!.text = "Download" }
+            handler.post { test!!.text = "Download" }
             val DownSpeed: Double
             val spd = "" + startSpeed
             Log.d("start d speed", spd)
@@ -123,7 +137,7 @@ class Fragment1 : Fragment() {
             thistest.setDown(DownSpeed)
             thistest.setStream(backend.Stream(DownSpeed))
             ///////////////////////////////////////////UPLOAD////////////////////////////////////////
-            handler.post { curTest!!.text = "Upload" }
+            handler.post { test!!.text = "Upload" }
             timetaken.clear()
             val maxup = nRand.nextInt(maxd - 2) + 2
             Log.d("Max up", "" + maxup)
@@ -169,7 +183,7 @@ class Fragment1 : Fragment() {
             val runtime = Runtime.getRuntime()
             try {
                 Log.d("Test", "Trying Ping")
-                handler.post { curTest!!.text = "Ping" }
+                handler.post { test!!.text = "Ping" }
                 val p = runtime.exec("ping 127.0.0.1")
                 var pid = -1
                 try {
@@ -180,7 +194,7 @@ class Fragment1 : Fragment() {
                 } catch (e: Throwable) {
                     pid = -1
                 }
-                val `inst` = p.inputStream
+                val `is` = p.inputStream
                 // reading output stream of the command
                 val conv = pid
                 Log.d("Process id", conv.toString())
@@ -197,7 +211,7 @@ class Fragment1 : Fragment() {
                     Log.d("Test", "start time: $uniqueId")
                     Log.d("Test", "Reading Ping")
                     val inputStream = BufferedReader(
-                        InputStreamReader(p.inputStream)
+                            InputStreamReader(p.inputStream)
                     )
                     var s: String? = ""
                     var time: Int
@@ -211,15 +225,16 @@ class Fragment1 : Fragment() {
                             Log.d("Time test!", (System.currentTimeMillis().toInt()-uniqueId).toString())
                             Log.d("Time tested!",((yesterday + System.currentTimeMillis())  -uniqueId).toString())
                             if (((System.currentTimeMillis()).toInt() - uniqueId).also {
-                                    time = it
-                                } >= 1000) {
+                                        time = it
+                                    } >= 1000) {
                                 val arrofs =
-                                    s!!.split(" ".toRegex()).toTypedArray()
+                                        s!!.split(" ".toRegex()).toTypedArray()
                                 if (arrofs[0] == "64") {
                                     Log.d(
-                                        "ping output",
-                                        arrofs[6].substring(5)
+                                            "ping output",
+                                            arrofs[6].substring(5)
                                     )
+                                    handler.post { curTest!!.text = arrofs[6].substring(5) }
                                     yester += (yester + System.currentTimeMillis()).toInt() - uniqueId.toLong()
                                     handler.post { prog_ping!!.progress = prog_ping!!.progress + 8 }
                                 }
@@ -236,8 +251,8 @@ class Fragment1 : Fragment() {
                                 if (pID != -1) {
                                     result.SetValue(s)
                                     Log.d(
-                                        "percent ping",
-                                        "" + prog_ping!!.progress
+                                            "percent ping",
+                                            "" + prog_ping!!.progress
                                     )
                                     runtime.exec("kill -SIGINT $pID")
                                 } else {
@@ -267,7 +282,7 @@ class Fragment1 : Fragment() {
                 val pbase = nRand.nextInt(140) + 40
                 val ping = parsePing[4].toDouble()
                 val jitter =
-                    parsePing[6].substring(0, parsePing[6].length - 3).toDouble()
+                        parsePing[6].substring(0, parsePing[6].length - 3).toDouble()
                 //ping *=10;
                 val jbase = nRand.nextInt(10)
                 //jitter *= 10;
@@ -283,7 +298,7 @@ class Fragment1 : Fragment() {
                 thistest.setPing(ping.toString())
                 val pktls: String = packets.GetValue()
                 val fndpkt =
-                    pktls.split(" ".toRegex()).toTypedArray()
+                        pktls.split(" ".toRegex()).toTypedArray()
                 val loss = fndpkt[5].substring(0, fndpkt[5].length - 1)
                 val los = loss.toDouble()
                 thistest.setMOS(backend.MOS(los, jitter, ping))
@@ -301,14 +316,15 @@ class Fragment1 : Fragment() {
                 var ups: Double? = thistest.up
 
                 handler.post {
-                    curTest!!.visibility = View.INVISIBLE
                     textView2.text = "Ping         $pings"+"ms"
                     textView3.text = "Download $downs"+"mb/s"
                     textView4.text = "Upload   $ups"+"mb/s"
-                    progress_bar_ping!!.visibility = View.INVISIBLE
-                    progress_bar_down!!.visibility = View.INVISIBLE
-                    progress_bar_up!!.visibility = View.INVISIBLE
+                    animationView1!!.visibility = View.INVISIBLE
+                    progress!!.visibility=View.GONE
                     resultsLayout!!.visibility= View.VISIBLE
+                    restart!!.visibility=View.VISIBLE
+                    test!!.visibility = View.INVISIBLE
+
                 }
 
 
@@ -317,10 +333,7 @@ class Fragment1 : Fragment() {
                 e.printStackTrace()
             }
         })
-        //Download
 
-        //Download
-        var DownSpeed: Double
         t.start()
 
     }
