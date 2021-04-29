@@ -90,7 +90,7 @@ public class backend {
     public static int randomInt(int i,int max){
         Random rand = new Random();
         if(i < max) {
-            int upper =  5;
+            int upper =  20;
             int newRand = rand.nextInt(upper);
             int fin = i+newRand;
             return fin;
@@ -115,78 +115,78 @@ public class backend {
         return  speed;
 
     }
-    public static void speedTest(){
-        //what should the base units be
-        int size = 100;
-        int packetSize = 1;
-        ArrayList<Integer> timetaken = new ArrayList<Integer>();
-        int amount = size / packetSize;
-        double longitude = 0;
-        double latitude = 0;
-
-        //Down Speed
-        //change text to download
-        Random nRand= new Random();
-        double DownSpeed;
-        int maxd = 100;
-        int startSpeed= nRand.nextInt(100);
-        String spd = ""+startSpeed;
-        Log.d("start d speed",spd);
-        timetaken.add(startSpeed);
-        for(int i =0;i< amount-1;i++){
-            timetaken.add(randomInt(startSpeed,maxd));
-            //update progress here after certain amount
-            DownSpeed = Speed(timetaken);
-            Log.d("Down Speed",""+DownSpeed);
-            try{
-                //update image and go up 1%
-                Thread.sleep(200);
-            }catch (InterruptedException e){
-                e.printStackTrace();
-            }
-        }
-
-
-        //Up Speed
-        //Change text to upload
-        timetaken.clear();
-        int maxup = (int)(startSpeed/5);
-        Log.d("Max up",""+maxup);
-        startSpeed = nRand.nextInt((int)(startSpeed/5))+1;
-        String uspd = ""+startSpeed;
-        Log.d("Start u speed",uspd);
-        double upSpeed;
-        int st = (int)System.currentTimeMillis();
-        for( int i =0;i< amount-1 ;i++){
-            timetaken.add(randomInt(startSpeed,maxup));
-            upSpeed = Speed(timetaken);
-            String prnt =""+ upSpeed;
-            Log.d("Up speed",prnt);
-            int tm = (int)System.currentTimeMillis();
-            int actme = tm - st;
-            String tme = ""+actme;
-            //Log.d("Up time",tme);
-            try{
-                Thread.sleep(200);
-            }catch (InterruptedException e){
-                e.printStackTrace();
-            }
-
-
-        }
-
-        double latency = 0; //temp
-        double jitter = 0; //temp
-        //use Ping for latency and jitter
-        String ip = "127.0.0.1";
-        Log.d("ip ",ip);
-        runSystemCommand("ping "+ ip);
-
-        //MOS Value
-        //int mosV = MOS(DownSpeed,upSpeed,latency,jitter);
-
-
-    }
+//    public static void speedTest(){
+//        //what should the base units be
+//        int size = 100;
+//        int packetSize = 1;
+//        ArrayList<Integer> timetaken = new ArrayList<Integer>();
+//        int amount = size / packetSize;
+//        double longitude = 0;
+//        double latitude = 0;
+//
+//        //Down Speed
+//        //change text to download
+//        Random nRand= new Random();
+//        double DownSpeed;
+//        int maxd = 100;
+//        int startSpeed= nRand.nextInt(100);
+//        String spd = ""+startSpeed;
+//        Log.d("start d speed",spd);
+//        timetaken.add(startSpeed);
+//        for(int i =0;i< amount-1;i++){
+//            timetaken.add(randomInt(startSpeed,maxd));
+//            //update progress here after certain amount
+//            //DownSpeed = Speed(timetaken);
+//            Log.d("Down Speed",""+DownSpeed);
+//            try{
+//                //update image and go up 1%
+//                Thread.sleep(200);
+//            }catch (InterruptedException e){
+//                e.printStackTrace();
+//            }
+//        }
+//
+//
+//        //Up Speed
+//        //Change text to upload
+//        timetaken.clear();
+//        int maxup = (int)(startSpeed/5);
+//        Log.d("Max up",""+maxup);
+//        startSpeed = nRand.nextInt((int)(startSpeed/5))+1;
+//        String uspd = ""+startSpeed;
+//        Log.d("Start u speed",uspd);
+//        double upSpeed;
+//        int st = (int)System.currentTimeMillis();
+//        for( int i =0;i< amount-1 ;i++){
+//            timetaken.add(randomInt(startSpeed,maxup));
+//            //upSpeed = Speed(timetaken);
+//            String prnt =""+ upSpeed;
+//            Log.d("Up speed",prnt);
+//            int tm = (int)System.currentTimeMillis();
+//            int actme = tm - st;
+//            String tme = ""+actme;
+//            //Log.d("Up time",tme);
+//            try{
+//                Thread.sleep(200);
+//            }catch (InterruptedException e){
+//                e.printStackTrace();
+//            }
+//
+//
+//        }
+//
+//        double latency = 0; //temp
+//        double jitter = 0; //temp
+//        //use Ping for latency and jitter
+//        String ip = "127.0.0.1";
+//        Log.d("ip ",ip);
+//        runSystemCommand("ping "+ ip);
+//
+//        //MOS Value
+//        //int mosV = MOS(DownSpeed,upSpeed,latency,jitter);
+//
+//
+//    }
     public static String Stream(Double down){
         if(down <1.1){
             return "N/A";

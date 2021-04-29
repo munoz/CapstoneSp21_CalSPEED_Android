@@ -8,6 +8,7 @@ import Java.speedResults
 import android.os.Bundle
 import android.os.Handler
 import android.transition.AutoTransition
+import android.transition.Scene
 import android.transition.TransitionManager
 import android.util.Log
 import android.view.LayoutInflater
@@ -63,6 +64,7 @@ class Fragment1 : Fragment() {
 
     private fun updateProgressBar() {
         val handler = Handler()
+
         if(resultsLayout.visibility == View.VISIBLE){
             resultsLayout.visibility = View.GONE
         }
@@ -75,8 +77,7 @@ class Fragment1 : Fragment() {
         if(animationView1.visibility == View.INVISIBLE){
             animationView1.visibility = View.VISIBLE
         }
-        cpuc.visibility = View.INVISIBLE
-        textView.visibility = View.INVISIBLE
+        title.visibility = View.INVISIBLE
         test.visibility = View.VISIBLE
         progress.visibility = View.VISIBLE
         prog_up!!.progress = 0
@@ -94,7 +95,7 @@ class Fragment1 : Fragment() {
         val timetaken: Queue<Int> = LinkedList()
         val amount = size / packetSize
         val nRand = Random()
-        val maxd = nRand.nextInt(100) + 5
+        val maxd = nRand.nextInt(3000) + 5
         val startSpeed = nRand.nextInt(maxd / 2)
 
         val t = Thread(Runnable {
@@ -113,7 +114,7 @@ class Fragment1 : Fragment() {
                 //update progress here after certain amount
                 try {
                     handler.post {
-                        curTest!!.text = currsped.toString()
+                        curTest!!.text = (currsped/ 100.00).toString() + "Mb/s"
                         prog_up!!.progress = prog_up!!.progress + 1
                     }
                     if (timetaken.size >= 5) {
@@ -131,7 +132,7 @@ class Fragment1 : Fragment() {
                 }
             }
             var overall = ArrayList(timetaken)
-            DownSpeed = backend.Speed(overall)
+            DownSpeed = backend.Speed(overall) / 100.00
             Log.d("Down Speed", "" + DownSpeed)
             Log.d("Last speed ", "" + prevsped)
             thistest.setDown(DownSpeed)
@@ -159,7 +160,7 @@ class Fragment1 : Fragment() {
                 //Log.d("Up time",tme);
                 try {
                     handler.post {
-                        curTest!!.text = curspeed.toString()
+                        curTest!!.text = (curspeed / 100.00).toString() + "Mb/s"
                         prog_down!!.progress = prog_down!!.progress + 1
                     }
                     if (timetaken.size >= 5) {
@@ -173,7 +174,7 @@ class Fragment1 : Fragment() {
                 }
             }
             overall = ArrayList(timetaken)
-            upSpeed = backend.Speed(overall)
+            upSpeed = backend.Speed(overall) / 100.00
             val prnt = "" + upSpeed
             Log.d("Up speed", prnt)
             thistest.setUp(upSpeed)
@@ -234,7 +235,7 @@ class Fragment1 : Fragment() {
                                             "ping output",
                                             arrofs[6].substring(5)
                                     )
-                                    handler.post { curTest!!.text = arrofs[6].substring(5) }
+                                    handler.post { curTest!!.text = arrofs[6].substring(5)+"ms" }
                                     yester += (yester + System.currentTimeMillis()).toInt() - uniqueId.toLong()
                                     handler.post { prog_ping!!.progress = prog_ping!!.progress + 8 }
                                 }
@@ -316,11 +317,11 @@ class Fragment1 : Fragment() {
                 var ups: Double? = thistest.up
 
                 handler.post {
-                    textView2.text = "Ping         $pings"+"ms"
-                    textView3.text = "Download $downs"+"mb/s"
-                    textView4.text = "Upload   $ups"+"mb/s"
+                    textView2.text = "Ping      $pings"+"ms"
+                    textView3.text = "Down     $downs"+"mb/s"
+                    textView4.text = "Up         $ups"+"mb/s"
+                    progress.visibility = View.GONE
                     animationView1!!.visibility = View.INVISIBLE
-                    progress!!.visibility=View.GONE
                     resultsLayout!!.visibility= View.VISIBLE
                     restart!!.visibility=View.VISIBLE
                     test!!.visibility = View.INVISIBLE
