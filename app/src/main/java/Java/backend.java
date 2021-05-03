@@ -90,7 +90,7 @@ public class backend {
     public static int randomInt(int i,int max){
         Random rand = new Random();
         if(i < max) {
-            int upper =  20;
+            int upper =  50;
             int newRand = rand.nextInt(upper);
             int fin = i+newRand;
             return fin;
