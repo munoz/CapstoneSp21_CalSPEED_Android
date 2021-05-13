@@ -57,8 +57,8 @@ class Fragment1 : Fragment() {
         //mMainScene = Scene(mSceneRoot, otherroot.findViewById<View>(R.id.container) as ViewGroup)
         //mMainScene = Scene(mSceneRoot,mSceneRoot!!.findViewById(R.id.container))
         mMainScene = Scene.getSceneForLayout(mSceneRoot,R.layout.fragment_1,activity)
-        mTestScene = Scene.getSceneForLayout(mSceneRoot,R.layout.testfrag,activity)
-        mResScene = Scene.getSceneForLayout(mSceneRoot,R.layout.resultfrag,activity)
+//        mTestScene = Scene.getSceneForLayout(mSceneRoot,R.layout.testfrag,activity)
+//        mResScene = Scene.getSceneForLayout(mSceneRoot,R.layout.resultfrag,activity)
         return vew
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
