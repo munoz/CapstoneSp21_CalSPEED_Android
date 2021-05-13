@@ -6,7 +6,7 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import com.cp_kotlin.Fragment1
 import com.cp_kotlin.Fragment2
-import com.cp_kotlin.Fragment3
+import com.cp_kotlin.FragmentMaps
 import com.cp_kotlin.R
 
 private val TAB_TITLES = arrayOf(
@@ -28,7 +28,7 @@ class SectionsPagerAdapter(private val context: Context, fm: FragmentManager)
         when(position) {
             0 -> fragment = Fragment1()
             1 -> fragment = Fragment2()
-            2 -> fragment = Fragment3()
+            2 -> fragment = FragmentMaps()
         }
 
         return fragment
