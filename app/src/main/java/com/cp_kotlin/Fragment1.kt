@@ -9,16 +9,20 @@ import android.os.Bundle
 import android.os.Handler
 import android.transition.AutoTransition
 import android.transition.Scene
+import android.transition.Transition
 import android.transition.TransitionManager
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentTransaction
 import androidx.room.Room
+import androidx.transition.ChangeBounds
+import androidx.transition.Fade
+import androidx.transition.TransitionSet
 import kotlinx.android.synthetic.main.fragment_1.*
 import java.io.BufferedReader
 import java.io.IOException
@@ -32,23 +36,37 @@ class Fragment1 : Fragment() {
     var prog_down: ProgressBar? = null
     var prog_up: ProgressBar? = null
     var curTest: TextView? = null
+    private var mMainScene: Scene? = null
+    private var mStartScene: Scene? = null
+    private var mResScene: Scene? = null
+    private var mTestScene: Scene? = null
+    private var mSceneRoot: ViewGroup? = null
 
     override fun onCreateView(
             inflater: LayoutInflater, container: ViewGroup?,
             savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_1, container, false)
+        var vew = inflater.inflate(R.layout.fragment_1,container,false)
+        assert(vew != null)
+        mSceneRoot = vew.findViewById(R.id.container)
+        var otherroot: ViewGroup? = mSceneRoot
+        // BEGIN_INCLUDE(instantiation_from_view)
+        // A Scene can be instantiated from a live view hierarchy.
+        //mStartScene = Scene.getSceneForLayout(mSceneRoot,R.layout.fragment_1,activity)
+        //mMainScene = Scene(mSceneRoot, otherroot.findViewById<View>(R.id.container) as ViewGroup)
+        //mMainScene = Scene(mSceneRoot,mSceneRoot!!.findViewById(R.id.container))
+        mMainScene = Scene.getSceneForLayout(mSceneRoot,R.layout.fragment_1,activity)
+        mTestScene = Scene.getSceneForLayout(mSceneRoot,R.layout.testfrag,activity)
+        mResScene = Scene.getSceneForLayout(mSceneRoot,R.layout.resultfrag,activity)
+        return vew
     }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        prog_ping = progress_bar_ping
-        prog_down = progress_bar_down
-        prog_up = progress_bar_up
-        curTest = text_view_progress
-        progress.visibility = View.GONE
-        resultsLayout.visibility = View.GONE
+        TransitionManager.go(mMainScene)
+
+
+        //progress.visibility = View.GONE
+        //resultsLayout.visibility = View.GONE
         mSpeedResults =
                 this.context?.let {
                     Room.databaseBuilder(it, AppDatabase::class.java, AppDatabase.dbName)
@@ -56,20 +74,74 @@ class Fragment1 : Fragment() {
                             .build()
                             .getspeedResultsdao()
                 }
-        var up: Button? = button_incr
-        up!!.setOnClickListener { updateProgressBar() }
-        var rst: Button? = restart
-        rst!!.setOnClickListener { updateProgressBar() }
-    }
+        //var up: Button? = button_incr
 
+        button_incr!!.setOnClickListener {
+            //goToScene(mTestScene)
+            //reaquire()
+            updateProgressBar()
+        }
+        //var rst: Button? = restart
+        restart!!.setOnClickListener { updateProgressBar() }
+
+    }
+    private fun reload(){
+        var currentFragment = requireActivity().supportFragmentManager.findFragmentById(R.id.view_pager)
+
+        if (currentFragment is Fragment1) {
+            var fragTransaction =   requireActivity().supportFragmentManager.beginTransaction()
+            fragTransaction.detach(currentFragment as Fragment)
+            fragTransaction.attach(currentFragment)
+            fragTransaction.commit()
+        }
+        reaquire()
+    }
+    private fun reaquire(){
+
+        prog_ping = progress_bar_ping
+        prog_down = progress_bar_down
+        prog_up = progress_bar_up
+        curTest = text_view_progress
+    }
+    private fun goToScene(scene: Scene?) {
+        val changeBounds = ChangeBounds()
+        changeBounds.duration = 1000
+        val fadeOut = Fade(Fade.OUT)
+        fadeOut.duration = 1000
+        val fadeIn = Fade(Fade.IN)
+        fadeIn.duration = 1000
+        val transition: TransitionSet = TransitionSet()
+        transition!!.ordering = TransitionSet.ORDERING_SEQUENTIAL
+        transition
+            .addTransition(fadeOut)
+            .addTransition(changeBounds)
+            .addTransition(fadeIn)
+
+        val auto: Transition? = AutoTransition()
+        TransitionManager.go(scene, auto)
+        Handler().postDelayed(
+                {
+                    // This method will be executed once the timer is over
+                },
+                1000 // value in milliseconds
+        )
+
+    }
     private fun updateProgressBar() {
         val handler = Handler()
 
+        //TransitionManager.go(mTestScene)
+        //goToScene(mTestScene)
+//        prog_ping = null
+//        prog_down = null
+//        prog_up = null
+//        curTest = null
+        //reaquire()
         if(resultsLayout.visibility == View.VISIBLE){
             resultsLayout.visibility = View.GONE
         }
         if (restart.visibility == View.VISIBLE){
-            restart.visibility =View.INVISIBLE
+            restart.visibility =View.GONE
         }
         if(button_incr.visibility == View.VISIBLE){
             button_incr.visibility = View.INVISIBLE
@@ -80,6 +152,7 @@ class Fragment1 : Fragment() {
         title.visibility = View.INVISIBLE
         test.visibility = View.VISIBLE
         progress.visibility = View.VISIBLE
+        reaquire()
         prog_up!!.progress = 0
         prog_down!!.progress = 0
         prog_ping!!.progress = 0
@@ -316,15 +389,28 @@ class Fragment1 : Fragment() {
                 var downs: Double? = thistest.down
                 var ups: Double? = thistest.up
 
+                //prog_ping = progress_bar_ping
+                //prog_down = progress_bar_down
+                //prog_up = progress_bar_up
+                //curTest = text_view_progress
                 handler.post {
+                    //goToScene(mResScene)
+                    //reaquire()
+                    text_view_progress.text = "Done"
+                    //prog_ping!!.progress = 100
+                    //prog_down!!.progress = 100
+                    //prog_up!!.progress = 100
+                    //curTest!!.text = "Done"
                     textView2.text = "Ping      $pings"+"ms"
                     textView3.text = "Down     $downs"+"mb/s"
                     textView4.text = "Up         $ups"+"mb/s"
-                    progress.visibility = View.GONE
+
+                    progress!!.visibility = View.GONE
                     animationView1!!.visibility = View.INVISIBLE
                     resultsLayout!!.visibility= View.VISIBLE
                     restart!!.visibility=View.VISIBLE
                     test!!.visibility = View.INVISIBLE
+
 
                 }
 

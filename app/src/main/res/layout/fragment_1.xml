@@ -1,256 +1,265 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<RelativeLayout
+    android:id="@+id/container"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@drawable/backgroundgradient"
-    tools:context=".MainActivity">
+    android:layout_height="match_parent">
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/backgroundgradient"
+        tools:context=".MainActivity">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/progress"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:padding="8dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.238">
-
-        <ProgressBar
-            android:id="@+id/progress_bar_up"
-            style="@style/CircularDeterminateProgressBar"
-            android:layout_width="210dp"
-            android:layout_height="210dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.0"
-            tools:progress="60" />
-
-        <ProgressBar
-            android:id="@+id/progress_bar_down"
-            style="@style/CircularDeterminateProgressBar"
-            android:layout_width="180dp"
-            android:layout_height="180dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:progress="60" />
-
-        <ProgressBar
-            android:id="@+id/progress_bar_ping"
-            style="@style/CircularDeterminateProgressBar"
-            android:layout_width="154.3dp"
-            android:layout_height="154.3dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:progress="60" />
-
-        <TextView
-            android:id="@+id/text_view_progress"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/progress"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="@style/TextAppearance.AppCompat.Large"
-            android:textColor="@color/white"
-            app:layout_constraintBottom_toBottomOf="@+id/progress_bar_up"
-            app:layout_constraintEnd_toEndOf="@+id/progress_bar_up"
-            app:layout_constraintStart_toStartOf="@+id/progress_bar_up"
-            app:layout_constraintTop_toTopOf="@+id/progress_bar_up"
-            tools:text="60%" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <com.airbnb.lottie.LottieAnimationView
-        android:id="@+id/animationView1"
-        android:layout_width="212dp"
-        android:layout_height="163dp"
-        android:visibility="invisible"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.7"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/progress"
-        app:layout_constraintVertical_bias="0"
-        app:lottie_autoPlay="true"
-        app:lottie_loop="true"
-        app:lottie_rawRes="@raw/lf30_editor_wirzbvkl" />
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/resultsLayout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Ping"
-        android:textSize="25sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.499"
-        android:padding="10dp">
-
-        <TextView
-            android:id="@+id/textView2"
-            android:layout_width="205dp"
-            android:layout_height="31dp"
-            android:layout_marginTop="1dp"
-            android:layout_marginBottom="8dp"
-            android:fontFamily="@font/carrois_gothic_sc"
-            android:gravity="left"
-            android:text=" Ping          12ms"
-            android:textColor="#FFFFFF"
-            android:textSize="25dp"
-            app:layout_constraintBottom_toTopOf="@+id/textView3"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"></TextView>
-
-        <TextView
-            android:id="@+id/textView3"
-            android:layout_width="206dp"
-            android:layout_height="33dp"
-            android:layout_marginEnd="12dp"
-            android:layout_marginBottom="9dp"
-            android:fontFamily="@font/carrois_gothic_sc"
-            android:text=" Download 12mb/s"
-            android:gravity="left"
-            android:textColor="#FFFFFF"
-            android:textSize="23dp"
-            app:layout_constraintBottom_toTopOf="@+id/textView4"
+            android:padding="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView2" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.1"
+            android:visibility="gone">
 
-        <TextView
-            android:id="@+id/textView4"
-            android:layout_width="205dp"
-            android:layout_height="30dp"
-            android:fontFamily="@font/carrois_gothic_sc"
-            android:gravity="left"
-            android:text=" Upload     5mb/s"
-            android:textColor="#FFFFFF"
-            android:textSize="25dp"
+            <ProgressBar
+                android:id="@+id/progress_bar_up"
+                style="@style/CircularDeterminateProgressBar"
+                android:layout_width="210dp"
+                android:layout_height="210dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.0"
+                tools:progress="60" />
+
+            <ProgressBar
+                android:id="@+id/progress_bar_down"
+                style="@style/CircularDeterminateProgressBar"
+                android:layout_width="180dp"
+                android:layout_height="180dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:progress="60" />
+
+            <ProgressBar
+                android:id="@+id/progress_bar_ping"
+                style="@style/CircularDeterminateProgressBar"
+                android:layout_width="154.3dp"
+                android:layout_height="154.3dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:progress="60" />
+
+            <TextView
+                android:id="@+id/text_view_progress"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                android:textColor="@color/white"
+                app:layout_constraintBottom_toBottomOf="@+id/progress_bar_up"
+                app:layout_constraintEnd_toEndOf="@+id/progress_bar_up"
+                app:layout_constraintStart_toStartOf="@+id/progress_bar_up"
+                app:layout_constraintTop_toTopOf="@+id/progress_bar_up"
+                tools:text="60%" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/animationView1"
+            android:layout_width="212dp"
+            android:layout_height="163dp"
+            android:visibility="invisible"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintHorizontal_bias="0.7"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView3" />
+            app:layout_constraintTop_toBottomOf="@+id/progress"
+            app:layout_constraintVertical_bias="0"
+            app:lottie_autoPlay="true"
+            app:lottie_loop="true"
+            app:lottie_rawRes="@raw/antennaanim" />
 
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-    <Button
-        android:id="@+id/button_incr"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="Start"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.5" />
-
-
-    <Button
-        android:id="@+id/restart"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="Again"
-        android:visibility="invisible"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.501"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/resultsLayout"
-        app:layout_constraintVertical_bias="0.171" />
-
-    <TextView
-        android:id="@+id/test"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="HOLD"
-        android:visibility="invisible"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/progress"
-        app:layout_constraintVertical_bias="0.062"></TextView>
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toTopOf="@+id/button_incr"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <TextView
-            android:id="@+id/textView"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/resultsLayout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/carrois_gothic_sc"
-            android:text="@string/speedtest"
-            android:textColor="#FFFFFF"
-            android:textSize="30dp"
+            android:text="Ping"
+            android:textSize="25sp"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.503"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/cpuc"
-            app:layout_constraintVertical_bias="0.577" />
-
-        <TextView
-            android:id="@+id/cpuc"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/carrois_gothic_sc"
-            android:text="@string/cpuc"
-            android:textColor="#FFFFFF"
-            android:textSize="30dp"
-            app:layout_constraintBottom_toTopOf="@+id/textView"
-            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.925" />
+            app:layout_constraintVertical_bias="0.3"
+            app:layout_constraintHorizontal_bias="0.5"
+
+            android:visibility="gone">
+
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="205dp"
+                android:layout_height="31dp"
+                android:layout_marginTop="1dp"
+                android:layout_marginBottom="8dp"
+                android:fontFamily="@font/carrois_gothic_sc"
+                android:gravity="left"
+                android:text=" Ping          12ms"
+                android:textColor="#FFFFFF"
+                android:textSize="25dp"
+                app:layout_constraintBottom_toTopOf="@+id/textView3"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"></TextView>
+
+            <TextView
+                android:id="@+id/textView3"
+                android:layout_width="206dp"
+                android:layout_height="33dp"
+                android:layout_marginEnd="12dp"
+                android:layout_marginBottom="9dp"
+                android:fontFamily="@font/carrois_gothic_sc"
+                android:text=" Download 12mb/s"
+                android:gravity="left"
+                android:textColor="#FFFFFF"
+                android:textSize="23dp"
+                app:layout_constraintBottom_toTopOf="@+id/textView4"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView2" />
+
+            <TextView
+                android:id="@+id/textView4"
+                android:layout_width="205dp"
+                android:layout_height="30dp"
+                android:fontFamily="@font/carrois_gothic_sc"
+                android:gravity="left"
+                android:text=" Upload     5mb/s"
+                android:textColor="#FFFFFF"
+                android:textSize="25dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView3" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        <Button
+            android:id="@+id/button_incr"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="Start"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.5" />
+
+
+        <Button
+            android:id="@+id/restart"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="Again"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.501"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/resultsLayout"
+            app:layout_constraintVertical_bias="0.2" />
+
+        <TextView
+            android:id="@+id/test"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="HOLD"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/progress"
+            app:layout_constraintVertical_bias="0.062"></TextView>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toTopOf="@+id/button_incr"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/carrois_gothic_sc"
+                android:text="@string/speedtest"
+                android:textColor="#FFFFFF"
+                android:textSize="30dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.503"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/cpuc"
+                app:layout_constraintVertical_bias="0.577" />
+
+            <TextView
+                android:id="@+id/cpuc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/carrois_gothic_sc"
+                android:text="@string/cpuc"
+                android:textColor="#FFFFFF"
+                android:textSize="30dp"
+                app:layout_constraintBottom_toTopOf="@+id/textView"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.925" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="20dp" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="20dp" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="20dp" />
+
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_begin="20dp" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_begin="20dp" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_begin="20dp" />
-
-
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</RelativeLayout>

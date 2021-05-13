@@ -10,6 +10,9 @@ import androidx.viewpager.widget.ViewPager
 import androidx.appcompat.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
+import android.widget.Button
+import androidx.constraintlayout.widget.Group
 import androidx.room.Room
 import com.cp_kotlin.ui.main.SectionsPagerAdapter
 
@@ -23,16 +26,13 @@ class MainActivity : AppCompatActivity() {
         viewPager.adapter = sectionsPagerAdapter
         val tabs: TabLayout = findViewById(R.id.tabs)
         tabs.setupWithViewPager(viewPager)
-        val fab: FloatingActionButton = findViewById(R.id.fab)
 
         mSpeedResults = Room.databaseBuilder(this, AppDatabase::class.java, AppDatabase.dbName)
             .allowMainThreadQueries()
             .build()
             .getspeedResultsdao()
 
-        fab.setOnClickListener { view ->
-            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                    .setAction("Action", null).show()
-        }
+
     }
+
 }
