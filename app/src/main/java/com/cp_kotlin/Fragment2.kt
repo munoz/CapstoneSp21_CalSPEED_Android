@@ -10,9 +10,11 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.cp_kotlin.RecyclerView.ResultAdapter
 import com.google.android.material.transition.MaterialSharedAxis
+import kotlinx.android.synthetic.main.fragment_2.*
 import java.util.*
 
 class Fragment2 : Fragment() {
+    var name = ArrayList<String>()
     private var layoutManager: RecyclerView.LayoutManager? = null
     private var adapter: RecyclerView.Adapter<ResultAdapter.ViewHolder>? = null
 
@@ -25,16 +27,16 @@ class Fragment2 : Fragment() {
         return rootView
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+    override fun onViewCreated(itemView: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(itemView, savedInstanceState)
 
-        exitTransition = MaterialSharedAxis(MaterialSharedAxis.X, false)
-        reenterTransition = MaterialSharedAxis(MaterialSharedAxis.X, true)
+        for (i in 0..10) {
+            name.add("Result $i")
+        }
 
-        /*
-        view.findViewById<Button>(R.id.button).setOnClickListener {
-            findNavController().navigate(R.id.action_Fragment2_to_Fragment4)
-        }*/
-
+        recyclerViewResults.apply {
+            layoutManager = LinearLayoutManager(activity)
+            adapter = ResultAdapter(name)
+        }
     }
 }
