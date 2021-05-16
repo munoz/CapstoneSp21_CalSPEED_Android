@@ -3,13 +3,9 @@ package com.cp_kotlin.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.LinearLayout
 import android.widget.TextView
-import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.cp_kotlin.R
-import java.util.*
 
 class ResultAdapter(
     private val resultsList: List<Result>,

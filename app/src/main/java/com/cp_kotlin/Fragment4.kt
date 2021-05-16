@@ -1,5 +1,6 @@
 package com.cp_kotlin
 
+import Java.speedResults
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -16,7 +17,7 @@ import com.cp_kotlin.RecyclerView.Result
 
 class Fragment4 : Fragment() {
 
-    private lateinit var resultsArgs: Result
+    private lateinit var resultsArgs: speedResults
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,6 +38,6 @@ class Fragment4 : Fragment() {
 
         val resultRow: TextView = view.findViewById(R.id.section_label)
 
-        resultRow.text = resultsArgs.name
+        resultRow.text = resultsArgs.ping
     }
 }

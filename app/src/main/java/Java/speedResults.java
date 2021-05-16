@@ -1,5 +1,8 @@
 package Java;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
@@ -9,7 +12,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 @Entity(tableName = AppDatabase.RESULTS_TABLE)
-public class speedResults {
+public class speedResults implements Parcelable {
     @PrimaryKey(autoGenerate = true)
     private int id;
 
@@ -31,6 +34,45 @@ public class speedResults {
         SimpleDateFormat sdf = new SimpleDateFormat("MM dd,yyyy HH:mm");
         this.date = new Date(now);
     }
+
+    protected speedResults(Parcel in) {
+        id = in.readInt();
+        if (in.readByte() == 0) {
+            Down = null;
+        } else {
+            Down = in.readDouble();
+        }
+        Network = in.readString();
+        if (in.readByte() == 0) {
+            Up = null;
+        } else {
+            Up = in.readDouble();
+        }
+        ping = in.readString();
+        jitter = in.readString();
+        latitude = in.readString();
+        longitude = in.readString();
+        if (in.readByte() == 0) {
+            MOS = null;
+        } else {
+            MOS = in.readDouble();
+        }
+        stream = in.readString();
+        conf = in.readString();
+        voip = in.readString();
+    }
+
+    public static final Creator<speedResults> CREATOR = new Creator<speedResults>() {
+        @Override
+        public speedResults createFromParcel(Parcel in) {
+            return new speedResults(in);
+        }
+
+        @Override
+        public speedResults[] newArray(int size) {
+            return new speedResults[size];
+        }
+    };
 
     public void setId(int id) {
         this.id = id;
@@ -153,5 +195,41 @@ public class speedResults {
                 ", conf='" + conf + '\'' +
                 ", voip='" + voip + '\'' +
                 '}';
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(id);
+        if (Down == null) {
+            dest.writeByte((byte) 0);
+        } else {
+            dest.writeByte((byte) 1);
+            dest.writeDouble(Down);
+        }
+        dest.writeString(Network);
+        if (Up == null) {
+            dest.writeByte((byte) 0);
+        } else {
+            dest.writeByte((byte) 1);
+            dest.writeDouble(Up);
+        }
+        dest.writeString(ping);
+        dest.writeString(jitter);
+        dest.writeString(latitude);
+        dest.writeString(longitude);
+        if (MOS == null) {
+            dest.writeByte((byte) 0);
+        } else {
+            dest.writeByte((byte) 1);
+            dest.writeDouble(MOS);
+        }
+        dest.writeString(stream);
+        dest.writeString(conf);
+        dest.writeString(voip);
     }
 }

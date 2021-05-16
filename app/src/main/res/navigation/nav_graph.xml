@@ -22,6 +22,6 @@
         tools:layout="@layout/fragment_4" >
         <argument
             android:name="resultArgs"
-            app:argType="com.cp_kotlin.RecyclerView.Result" />
+            app:argType="Java.speedResults" />
     </fragment>
 </navigation>
