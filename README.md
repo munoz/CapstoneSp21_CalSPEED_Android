@@ -5,10 +5,10 @@
 ### Spring 2021
 
 <br>
-<!---App is used by CPUC to record broadband speeds
+App is used by CPUC to record broadband speeds
 
 
-      ### App Walkthrough GIF 
- ![](https://recordit.co/DDYv2Ptmo8.gif)     --->
+### App Walkthrough GIF 
+![](https://recordit.co/2OC6NPuepW.gif)
 
 
