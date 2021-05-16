@@ -14,24 +14,14 @@
         <action
             android:id="@+id/action_Fragment2_to_Fragment4"
             app:destination="@id/Fragment4" />
-        <action
-            android:id="@+id/action_Fragment2_to_ResultFragment"
-            app:destination="@id/ResultFragment" />
     </fragment>
     <fragment
         android:id="@+id/Fragment4"
         android:name="com.cp_kotlin.Fragment4"
         android:label="Single Result"
-        tools:layout="@layout/fragment_4">
-
-        <action
-            android:id="@+id/action_Fragment4_to_Fragment2"
-            app:destination="@id/Fragment2" />
-    </fragment>
-    <fragment
-        android:id="@+id/ResultFragment"
-        android:name="com.cp_kotlin.ResultFragment"
-        android:label="Single Result"
-        tools:layout="@layout/result_page_layout">
+        tools:layout="@layout/fragment_4" >
+        <argument
+            android:name="resultArgs"
+            app:argType="com.cp_kotlin.RecyclerView.Result" />
     </fragment>
 </navigation>

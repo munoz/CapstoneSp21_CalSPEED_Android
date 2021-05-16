@@ -12,36 +12,43 @@ import com.cp_kotlin.R
 import java.util.*
 
 class ResultAdapter(
-    var rows: ArrayList<String>
-) : RecyclerView.Adapter<ResultAdapter.ViewHolder>() {
+    private val resultsList: List<Result>,
+    private val onClickListener: OnClickListener
+) :
+    RecyclerView.Adapter<ResultAdapter.ResultAdapterHolder>() {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val inflater = LayoutInflater.from(parent.context)
-        val view = inflater.inflate(R.layout.result_row, parent, false)
-        return ViewHolder(view)
-    }
+    class ResultAdapterHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        private val title: TextView = itemView.findViewById(R.id.resultName)
 
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.resultRow.setText(rows.get(position))
-
-    }
-
-    override fun getItemCount(): Int {
-        return rows.size
-    }
-
-    inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        var resultRow: TextView
-        var myLayout: LinearLayout
-
-        init {
-            resultRow = super.itemView.findViewById(R.id.resultName)
-            myLayout = super.itemView.findViewById(R.id.resultLayout)
-
-            itemView.setOnClickListener{ view ->
-                view.findNavController().navigate(R.id.action_Fragment2_to_ResultFragment)
+        fun bind(
+                results: Result,
+                onClickListener: OnClickListener
+        ) {
+            title.text = results.name
+            itemView.setOnClickListener {
+                onClickListener.onClick(results)
             }
         }
     }
 
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ResultAdapterHolder {
+        val inflater = LayoutInflater.from(parent.context)
+        val view = inflater.inflate(R.layout.result_row, parent, false)
+        return ResultAdapterHolder(view)
+    }
+
+    override fun onBindViewHolder(holder: ResultAdapterHolder, position: Int) {
+        val results: Result = resultsList[position]
+        holder.bind(results, onClickListener)
+    }
+
+    override fun getItemCount(): Int {
+        return resultsList.size
+    }
+
+    class OnClickListener(val clickListener: (Result) -> Unit) {
+        fun onClick(
+                results: Result
+        ) = clickListener(results)
+    }
 }
