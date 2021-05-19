@@ -5,6 +5,7 @@ import DB.speedResultsdao
 import Java.backend
 import Java.funString
 import Java.speedResults
+import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.transition.AutoTransition
@@ -17,6 +18,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ProgressBar
 import android.widget.TextView
+import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import androidx.room.Room
@@ -61,6 +63,7 @@ class Fragment1 : Fragment() {
 //        mResScene = Scene.getSceneForLayout(mSceneRoot,R.layout.resultfrag,activity)
         return vew
     }
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         TransitionManager.go(mMainScene)
 
@@ -127,6 +130,7 @@ class Fragment1 : Fragment() {
         )
 
     }
+    @RequiresApi(Build.VERSION_CODES.O)
     private fun updateProgressBar() {
         val handler = Handler()
 

@@ -19,10 +19,9 @@
         android:id="@+id/Fragment4"
         android:name="com.cp_kotlin.Fragment4"
         android:label="Single Result"
-        tools:layout="@layout/fragment_4">
-
-        <action
-            android:id="@+id/action_Fragment4_to_Fragment2"
-            app:destination="@id/Fragment2" />
+        tools:layout="@layout/fragment_4" >
+        <argument
+            android:name="resultArgs"
+            app:argType="Java.speedResults" />
     </fragment>
 </navigation>

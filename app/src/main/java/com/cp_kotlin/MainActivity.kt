@@ -13,11 +13,17 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.Button
 import androidx.constraintlayout.widget.Group
+import androidx.navigation.NavController
+import androidx.navigation.findNavController
+import androidx.navigation.ui.NavigationUI
 import androidx.room.Room
 import com.cp_kotlin.ui.main.SectionsPagerAdapter
 
 class MainActivity : AppCompatActivity() {
     var mSpeedResults: speedResultsdao? = null
+
+    private lateinit var navController: NavController
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -32,7 +38,11 @@ class MainActivity : AppCompatActivity() {
             .build()
             .getspeedResultsdao()
 
-
+        navController = this.findNavController(R.id.nav_host_fragment)
+        //NavigationUI.setupActionBarWithNavController(this, navController)
     }
 
+    override fun onSupportNavigateUp(): Boolean {
+        return navController.navigateUp()
+    }
 }

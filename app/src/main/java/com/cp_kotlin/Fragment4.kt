@@ -1,5 +1,6 @@
 package com.cp_kotlin
 
+import Java.speedResults
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -7,11 +8,22 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.LinearLayout
+import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.transition.MaterialSharedAxis
+import com.cp_kotlin.RecyclerView.Result
 
 class Fragment4 : Fragment() {
+
+    private lateinit var resultsArgs: speedResults
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        val args = requireArguments()
+        resultsArgs = Fragment4Args.fromBundle(args).resultArgs
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -24,23 +36,8 @@ class Fragment4 : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        exitTransition = MaterialSharedAxis(MaterialSharedAxis.X, true)
-        reenterTransition = MaterialSharedAxis(MaterialSharedAxis.X, false)
+        val resultRow: TextView = view.findViewById(R.id.section_label)
 
-        enterTransition = MaterialSharedAxis(MaterialSharedAxis.X, false)
-        returnTransition = MaterialSharedAxis(MaterialSharedAxis.X, true)
-
-        view.findViewById<Button>(R.id.button2).setOnClickListener {
-            findNavController().navigate(R.id.action_Fragment4_to_Fragment2)
-        }
-    }
-
-    //public static Intent intentFactory(CreateAccountActivity context){
-    companion object {
-        @JvmStatic
-        fun intentFactory(context: Context): Intent {
-            return Intent(context, Fragment4::
-            class.java)
-        }
+        resultRow.text = resultsArgs.ping
     }
 }

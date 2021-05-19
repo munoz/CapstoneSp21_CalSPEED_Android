@@ -1,54 +1,50 @@
 package com.cp_kotlin.RecyclerView
 
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
-import com.cp_kotlin.Fragment4.Companion.intentFactory
 import com.cp_kotlin.R
-import java.util.*
 
 class ResultAdapter(
-    var context: Context,
-    var rows: ArrayList<String>
+    private val resultsList: List<Result>,
+    private val onClickListener: OnClickListener
 ) :
-    RecyclerView.Adapter<ResultAdapter.ViewHolder>() {
-    override fun onCreateViewHolder(
-        parent: ViewGroup,
-        viewType: Int
-    ): ViewHolder {
-        val inflater = LayoutInflater.from(context)
-        val view = inflater.inflate(R.layout.result_row, parent, false)
-        return ViewHolder(view)
+    RecyclerView.Adapter<ResultAdapter.ResultAdapterHolder>() {
+
+    class ResultAdapterHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        private val title: TextView = itemView.findViewById(R.id.resultName)
+
+        fun bind(
+                results: Result,
+                onClickListener: OnClickListener
+        ) {
+            title.text = results.name
+            itemView.setOnClickListener {
+                onClickListener.onClick(results)
+            }
+        }
     }
 
-    override fun onBindViewHolder(
-        holder: ViewHolder,
-        position: Int
-    ) {
-        holder.resultRow.text = rows[position]
-        holder.myLayout.setOnClickListener {
-            val intent = intentFactory(context)
-            intent.putExtra("USERNAME", rows[position])
-            context.startActivity(intent)
-        }
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ResultAdapterHolder {
+        val inflater = LayoutInflater.from(parent.context)
+        val view = inflater.inflate(R.layout.result_row, parent, false)
+        return ResultAdapterHolder(view)
+    }
+
+    override fun onBindViewHolder(holder: ResultAdapterHolder, position: Int) {
+        val results: Result = resultsList[position]
+        holder.bind(results, onClickListener)
     }
 
     override fun getItemCount(): Int {
-        return rows.size
+        return resultsList.size
     }
 
-    inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        var resultRow: TextView
-        var myLayout: ConstraintLayout
-
-        init {
-            resultRow = itemView.findViewById(R.id.row_recy)
-            myLayout = itemView.findViewById(R.id.recycle)
-        }
+    class OnClickListener(val clickListener: (Result) -> Unit) {
+        fun onClick(
+                results: Result
+        ) = clickListener(results)
     }
-
 }
